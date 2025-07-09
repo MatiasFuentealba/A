@@ -1,0 +1,21 @@
+partidos = pd.read_excel('/content/Partidos_ColoColo_Uchile.xlsx')
+retornos_diarios = pd.read_excel('/content/Retornos_diarios.xlsx')
+retornos_mensuales = pd.read_excel('/content/Retornos_mensuales.xlsx')
+
+ventanaAR = []
+for i in partidos.Dia:
+    ventanaAR.append(ventanaAAR(i))
+
+Ventana_estimacion = []
+for i in partidos.Mes:
+    Ventana_estimacion.append(ventanaBeta(i))
+
+coeficientes = []
+
+for i in range(len(Ventana_estimacion)):
+    coef = coef_regresion_ventana(
+        retornos_mensuales["COLO COLO"],
+        retornos_mensuales["IGPA"],
+        Ventana_estimacion[i]
+    )
+    coeficientes.append(coef)
